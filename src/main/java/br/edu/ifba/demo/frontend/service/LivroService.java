@@ -13,11 +13,11 @@ public class LivroService {
     @Autowired
     private WebClient webClient;
 
-    private final String URL_LIVROS = "/livros"; // URL base da API
+    private final String URL_LIVROS = "/livros"; 
 
     // Listar todos os livros
     public List<LivroDTO> listAllLivros() {
-        return webClient.get().uri(URL_LIVROS + "/listall")  // Corrigido para a rota correta
+        return webClient.get().uri(URL_LIVROS + "/listall")  
                 .retrieve()
                 .bodyToFlux(LivroDTO.class)
                 .collectList()
@@ -28,7 +28,7 @@ public class LivroService {
     public boolean delete(Long id) {
         return webClient.delete().uri(URL_LIVROS + "/delete/" + id)
                 .retrieve()
-                .bodyToMono(Boolean.class)  // Espera resposta booleana de sucesso
+                .bodyToMono(Boolean.class)  
                 .block();
     }
 

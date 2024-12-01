@@ -14,32 +14,32 @@ public class LivroController {
     @Autowired
     private LivroService livroService;
 
-    // Página inicial, listando todos os livros
+    
     @GetMapping("/livros")
     public ModelAndView listarLivros() {
-        var livros = livroService.listAllLivros();  // Corrigido para buscar livros diretamente
+        var livros = livroService.listAllLivros();  
         ModelAndView mv = new ModelAndView();
-        mv.addObject("livros", livros);  // Envia os livros para a view
-        mv.setViewName("livros");  // Define a página de exibição
+        mv.addObject("livros", livros);  
+        mv.setViewName("livros");  
         return mv;
     }
 
     // Excluir livro pelo ID
     @GetMapping("/livro/delete/{id}")
     public ModelAndView excluirLivro(@PathVariable Long id) {
-        boolean sucesso = livroService.delete(id);  // Chama o serviço para excluir o livro
+        boolean sucesso = livroService.delete(id);  
         ModelAndView mv = new ModelAndView();
-        mv.addObject("sucesso", sucesso ? "Livro excluído com sucesso!" : "Erro ao excluir livro");
-        mv.setViewName("livros");  // Retorna à lista de livros após a exclusão
+        mv.addObject("sucesso", sucesso ? "Livro excluído." : "Erro ao excluir livro");
+        mv.setViewName("livros");  
         return mv;
     }
 
     // Buscar livro por ID
     @GetMapping("/livro/{id}")
     public ModelAndView consultarLivroPorId(@PathVariable Long id) {
-        var livro = livroService.findById(id);  // Chama o serviço para buscar livro por ID
+        var livro = livroService.findById(id); 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("livro", livro);  // Envia o livro encontrado para a view
+        mv.addObject("livro", livro); 
         mv.setViewName("livros");
         return mv;
     }
@@ -47,7 +47,7 @@ public class LivroController {
     // Buscar livro por ISBN
     @GetMapping("/livro/isbn/{isbn}")
     public ModelAndView consultarLivroPorIsbn(@PathVariable String isbn) {
-        var livro = livroService.findByIsbn(isbn);  // Chama o serviço para buscar livro por ISBN
+        var livro = livroService.findByIsbn(isbn);  
         ModelAndView mv = new ModelAndView();
         mv.addObject("livro", livro);
         mv.setViewName("livros");
@@ -57,7 +57,7 @@ public class LivroController {
     // Buscar livro por Título
     @GetMapping("/livro/titulo/{titulo}")
     public ModelAndView consultarLivroPorTitulo(@PathVariable String titulo) {
-        var livro = livroService.findByTitulo(titulo);  // Chama o serviço para buscar livro por Título
+        var livro = livroService.findByTitulo(titulo);  
         ModelAndView mv = new ModelAndView();
         mv.addObject("livro", livro);
         mv.setViewName("livros");
