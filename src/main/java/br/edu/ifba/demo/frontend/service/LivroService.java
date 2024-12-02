@@ -13,11 +13,12 @@ public class LivroService {
     @Autowired
     private WebClient webClient;
 
-    private final String URL_LIVROS = "/livros"; 
+    private final String URL_BASE = "http://localhost:8080"; // URL base para o backend
 
     // Listar todos os livros
     public List<LivroDTO> listAllLivros() {
-        return webClient.get().uri(URL_LIVROS + "/listall")  
+        return webClient.get()
+                .uri(URL_BASE + "/livros/listall")
                 .retrieve()
                 .bodyToFlux(LivroDTO.class)
                 .collectList()
@@ -25,16 +26,18 @@ public class LivroService {
     }
 
     // Excluir livro
-    public boolean delete(Long id) {
-        return webClient.delete().uri(URL_LIVROS + "/delete/" + id)
+    public void delete(Long id) {
+        webClient.delete()
+                .uri(URL_BASE + "/livros/delete/" + id)
                 .retrieve()
-                .bodyToMono(Boolean.class)  
+                .bodyToMono(Void.class)
                 .block();
     }
 
     // Buscar livro por ID
     public LivroDTO findById(Long id) {
-        return webClient.get().uri(URL_LIVROS + "/findById/{id}", id)
+        return webClient.get()
+                .uri(URL_BASE + "/livros/findById/{id}", id)
                 .retrieve()
                 .bodyToMono(LivroDTO.class)
                 .block();
@@ -42,15 +45,28 @@ public class LivroService {
 
     // Buscar livro por ISBN
     public LivroDTO findByIsbn(String isbn) {
-        return webClient.get().uri(URL_LIVROS + "/findByIsbn/{isbn}", isbn)
+        return webClient.get()
+                .uri(URL_BASE + "/livros/findByIsbn/{isbn}", isbn)
                 .retrieve()
                 .bodyToMono(LivroDTO.class)
                 .block();
     }
 
     // Buscar livro por Título
-    public LivroDTO findByTitulo(String titulo) {
-        return webClient.get().uri(URL_LIVROS + "/findByTitulo/{titulo}", titulo)
+    public List<LivroDTO> findByTitulo(String titulo) {
+        return webClient.get()
+                .uri(URL_BASE + "/livros/findByTitulo/{titulo}", titulo)
+                .retrieve()
+                .bodyToFlux(LivroDTO.class)
+                .collectList()
+                .block();
+    }
+
+    // Salvar livro
+    public LivroDTO salvar(LivroDTO livroDTO) {
+        return webClient.post()
+                .uri(URL_BASE + "/livros/cadastrar")
+                .bodyValue(livroDTO)
                 .retrieve()
                 .bodyToMono(LivroDTO.class)
                 .block();
