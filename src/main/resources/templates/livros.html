@@ -8,8 +8,8 @@
     <div class="container">
         <h1 class="my-4">Gerenciamento de Livros</h1>
 
-        <!-- Formulário para Adicionar/Consultar Livro -->
-        <form th:action="@{/livros/add}" method="post" class="mb-4">
+        <!-- Formulário para Adicionar -->
+        <form th:action="@{/livros/save}" method="post" class="mb-4">
             <div class="row g-3">
                 <div class="col-md-4">
                     <input type="text" class="form-control" name="titulo" placeholder="Título" required>
@@ -18,12 +18,39 @@
                     <input type="text" class="form-control" name="autor" placeholder="Autor" required>
                 </div>
                 <div class="col-md-4">
-                    <input type="number" class="form-control" name="isbn" placeholder="ISBN" required>
+                    <input type="text" class="form-control" name="isbn" placeholder="ISBN" required>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="editora" placeholder="Editora">
+                </div>
+                <div class="col-md-4">
+                    <input type="number" class="form-control" name="ano_publicacao" placeholder="Ano">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="genero" placeholder="Gênero">
+                </div>
+                <div class="col-md-4">
+                    <input type="number" class="form-control" name="num_paginas" placeholder="Número de Páginas">
                 </div>
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Adicionar Livro</button>
                 </div>
             </div>
+        </form>
+
+        <!-- Formulários de Busca -->
+        <h3>Buscar Livros</h3>
+        <form th:action="@{/livros/findById/{id}(id=${id})}" method="get" class="mb-3 d-inline-block">
+            <input type="number" name="id" class="form-control d-inline-block w-25" placeholder="ID">
+            <button type="submit" class="btn btn-secondary">Buscar por ID</button>
+        </form>
+        <form th:action="@{/livros/findByTitulo/{titulo}(titulo=${titulo})}" method="get" class="mb-3 d-inline-block">
+            <input type="text" name="titulo" class="form-control d-inline-block w-25" placeholder="Título">
+            <button type="submit" class="btn btn-secondary">Buscar por Título</button>
+        </form>
+        <form th:action="@{/livros/findByIsbn/{isbn}(isbn=${isbn})}" method="get" class="mb-3 d-inline-block">
+            <input type="text" name="isbn" class="form-control d-inline-block w-25" placeholder="ISBN">
+            <button type="submit" class="btn btn-secondary">Buscar por ISBN</button>
         </form>
 
         <!-- Lista de Livros -->

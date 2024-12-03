@@ -35,4 +35,5 @@ public class LivroService {
     public void delete(Long id) {
         restTemplate.delete(BASE_URL + "/delete/" + id);
     }
+    
 }
