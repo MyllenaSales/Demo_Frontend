@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 /*import org.springframework.web.bind.annotation.RequestParam; */
 import org.springframework.web.servlet.ModelAndView;
 import br.edu.ifba.demo.frontend.dto.LivroDTO;
@@ -37,19 +38,23 @@ public class LivroController {
         return mv;
     }
     
-    /* buscar por titulo */
-     @GetMapping("/livros/findByTitulo")
-     public ModelAndView getByTitulo(@PathVariable("titulo") String titulo) {
-        LivroDTO livro1 = livroService.getByTitulo(titulo);
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("livro.titulo", livro1);
-        mv.setViewName("livros");
-        return mv;
+   /* Buscar por título */
+@GetMapping("/livros/findByTitulo/{titulo}")
+public ModelAndView getByTitulo(@PathVariable("titulo") String titulo) {
+    LivroDTO livro1 = livroService.getByTitulo(titulo);
+    ModelAndView mv = new ModelAndView();
+    if (livro1 != null) {
+        mv.addObject("listaLivros", List.of(livro1)); // Atualiza a lista para exibir o resultado
+    } else {
+        mv.addObject("errorMessage", "Livro não encontrado!");
     }
+    mv.setViewName("livros");
+    return mv;
+}
 
         /* buscar por isbn */
-     @GetMapping("/livros/findByIsbn")
-     public ModelAndView getByIsbn(@PathVariable("isbn") String isbn) {
+     @GetMapping("/livros/findByIsbn/{isbn}")
+     public ModelAndView getByIsbn(@RequestParam("isbn") String isbn) {
             LivroDTO livro2 = livroService.getByIsbn(isbn);
             ModelAndView mv = new ModelAndView();
             mv.addObject("livro.isbn", livro2);
@@ -59,7 +64,7 @@ public class LivroController {
 
         /* Buscar livro por ID */
         @GetMapping("/livros/findById/{id}")
-        public ModelAndView getById(@PathVariable("id") Long id) {
+        public ModelAndView getById(@RequestParam("id") Long id) {
             LivroDTO livro = livroService.getById(id);
             ModelAndView mv = new ModelAndView();
             if (livro != null) {
@@ -74,7 +79,7 @@ public class LivroController {
         
         /* Excluir livro */
      @GetMapping("/livros/delete/{id}")
-     public String delete(@PathVariable("id") Long id) {
+     public String delete(@RequestParam("id") Long id) {
         livroService.delete(id);
         return "redirect:/livros/listAll";
         }
