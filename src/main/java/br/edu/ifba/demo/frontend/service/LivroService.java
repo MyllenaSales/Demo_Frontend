@@ -1,74 +1,38 @@
 package br.edu.ifba.demo.frontend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import br.edu.ifba.demo.frontend.dto.LivroDTO;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import br.edu.ifba.demo.frontend.dto.LivroDTO;
 
 @Service
 public class LivroService {
 
-    @Autowired
-    private WebClient webClient;
+    private final String BASE_URL = "http://localhost:8081/livros"; // URL base do backend
 
-    private final String URL_BASE = "http://localhost:8080"; // URL base para o backend
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    // Listar todos os livros
-    public List<LivroDTO> listAllLivros() {
-        return webClient.get()
-                .uri(URL_BASE + "/livros/listall")
-                .retrieve()
-                .bodyToFlux(LivroDTO.class)
-                .collectList()
-                .block();
+    public List<LivroDTO> listAll() {
+        return List.of(restTemplate.getForObject(BASE_URL + "/listAll", LivroDTO[].class));
     }
 
-    // Excluir livro
+    public LivroDTO getById(Long id) {
+        return restTemplate.getForObject(BASE_URL + "/findById/" + id, LivroDTO.class);
+    }
+
+    public LivroDTO getByIsbn(String isbn) {
+        return restTemplate.getForObject(BASE_URL + "/findByIsbn/" + isbn, LivroDTO.class);
+    }
+
+    public LivroDTO getByTitulo(String titulo) {
+        return restTemplate.getForObject(BASE_URL + "/findByTitulo/" + titulo, LivroDTO.class);
+    }
+
+    public LivroDTO save(LivroDTO livro) {
+        return restTemplate.postForObject(BASE_URL, livro, LivroDTO.class);
+    }
+
     public void delete(Long id) {
-        webClient.delete()
-                .uri(URL_BASE + "/livros/delete/" + id)
-                .retrieve()
-                .bodyToMono(Void.class)
-                .block();
-    }
-
-    // Buscar livro por ID
-    public LivroDTO findById(Long id) {
-        return webClient.get()
-                .uri(URL_BASE + "/livros/findById/{id}", id)
-                .retrieve()
-                .bodyToMono(LivroDTO.class)
-                .block();
-    }
-
-    // Buscar livro por ISBN
-    public LivroDTO findByIsbn(String isbn) {
-        return webClient.get()
-                .uri(URL_BASE + "/livros/findByIsbn/{isbn}", isbn)
-                .retrieve()
-                .bodyToMono(LivroDTO.class)
-                .block();
-    }
-
-    // Buscar livro por Título
-    public List<LivroDTO> findByTitulo(String titulo) {
-        return webClient.get()
-                .uri(URL_BASE + "/livros/findByTitulo/{titulo}", titulo)
-                .retrieve()
-                .bodyToFlux(LivroDTO.class)
-                .collectList()
-                .block();
-    }
-
-    // Salvar livro
-    public LivroDTO salvar(LivroDTO livroDTO) {
-        return webClient.post()
-                .uri(URL_BASE + "/livros/cadastrar")
-                .bodyValue(livroDTO)
-                .retrieve()
-                .bodyToMono(LivroDTO.class)
-                .block();
+        restTemplate.delete(BASE_URL + "/delete/" + id);
     }
 }

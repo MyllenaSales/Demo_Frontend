@@ -1,67 +1,69 @@
 package br.edu.ifba.demo.frontend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import br.edu.ifba.demo.frontend.dto.LivroDTO;
-import br.edu.ifba.demo.frontend.service.LivroService;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import br.edu.ifba.demo.frontend.service.LivroService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import br.edu.ifba.demo.frontend.dto.LivroDTO;
+
 @Controller
-@RequestMapping("/livros")
 public class LivroController {
 
-    @Autowired
+       @Autowired
     private LivroService livroService;
 
-    // Renderizar a página inicial
-    @GetMapping("/")
-    public String index() {
-        return "livros"; // O arquivo HTML "livros.html" será renderizado
+    
+    /* Listar livros */
+     @GetMapping("/livros/listAll")
+     public ModelAndView livros() {
+        List<LivroDTO> li = livroService.listAll();
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("listaLivros", li);
+        mv.setViewName("livros");
+        return mv;
+    }
+    
+    /* buscar por titulo */
+     @GetMapping("/livros/findByTitulo")
+     public ModelAndView getByTitulo(@RequestParam("titulo") String titulo) {
+        LivroDTO livro = livroService.getByTitulo(titulo);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("livro", livro);
+        mv.setViewName("livroDetalhe");
+        return mv;
     }
 
-    // Listar todos os livros
-    @GetMapping("/listall")
-    @ResponseBody
-    public List<LivroDTO> listarLivros() {
-        return livroService.listAllLivros();
-    }
+        /* buscar por isbn */
+     @GetMapping("/livros/findByIsbn")
+     public ModelAndView getByIsbn(@RequestParam("isbn") String isbn) {
+            LivroDTO livro = livroService.getByIsbn(isbn);
+            ModelAndView mv = new ModelAndView();
+            mv.addObject("livro", livro);
+            mv.setViewName("livroDetalhe");
+            return mv;
+        }
 
-    // Cadastrar um novo livro
-    @PostMapping("/cadastrar")
-    @ResponseBody
-    public LivroDTO cadastrarLivro(@RequestBody LivroDTO livroDTO) {
-        return livroService.salvar(livroDTO);
-    }
+        /* Buscar livro por ID */
+     @GetMapping("/livros/findById/{id}")
+     public ModelAndView getById(@PathVariable("id") Long id) {
+        LivroDTO livro = livroService.getById(id);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("livro", livro);
+        mv.setViewName("livroDetalhe");
+        return mv;
+        }
 
-    // Excluir um livro pelo ID
-    @DeleteMapping("/delete/{id}")
-    @ResponseBody
-    public String excluirLivro(@PathVariable Long id) {
+        
+        /* Excluir livro */
+     @GetMapping("/livros/delete/{id}")
+     public String delete(@PathVariable("id") Long id) {
         livroService.delete(id);
-        return "Livro excluído com sucesso!";
-    }
-
-    // Buscar um livro por ID
-    @GetMapping("/findById/{id}")
-    @ResponseBody
-    public LivroDTO buscarLivroPorId(@PathVariable Long id) {
-        return livroService.findById(id);
-    }
-
-    // Buscar um livro por ISBN
-    @GetMapping("/findByIsbn/{isbn}")
-    @ResponseBody
-    public LivroDTO buscarLivroPorIsbn(@PathVariable String isbn) {
-        return livroService.findByIsbn(isbn);
-    }
-
-    // Buscar um livro por Título
-    @GetMapping("/findByTitulo/{titulo}")
-    @ResponseBody
-    public List<LivroDTO> buscarLivroPorTitulo(@PathVariable String titulo) {
-        return livroService.findByTitulo(titulo);
-    }
+        return "redirect:/livros/listAll";
+        }
 }
+
