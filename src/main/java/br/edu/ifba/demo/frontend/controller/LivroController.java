@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import br.edu.ifba.demo.frontend.service.LivroService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+/*import org.springframework.web.bind.annotation.RequestParam; */
 import org.springframework.web.servlet.ModelAndView;
 import br.edu.ifba.demo.frontend.dto.LivroDTO;
 
@@ -30,31 +30,31 @@ public class LivroController {
     
     /* buscar por titulo */
      @GetMapping("/livros/findByTitulo")
-     public ModelAndView getByTitulo(@RequestParam("titulo") String titulo) {
-        LivroDTO livro = livroService.getByTitulo(titulo);
+     public ModelAndView getByTitulo(@PathVariable("titulo") String titulo) {
+        LivroDTO livro1 = livroService.getByTitulo(titulo);
         ModelAndView mv = new ModelAndView();
-        mv.addObject("livro", livro);
-        mv.setViewName("livroDetalhe");
+        mv.addObject("livro", livro1);
+        mv.setViewName("livros");
         return mv;
     }
 
         /* buscar por isbn */
      @GetMapping("/livros/findByIsbn")
-     public ModelAndView getByIsbn(@RequestParam("isbn") String isbn) {
-            LivroDTO livro = livroService.getByIsbn(isbn);
+     public ModelAndView getByIsbn(@PathVariable("isbn") String isbn) {
+            LivroDTO livro2 = livroService.getByIsbn(isbn);
             ModelAndView mv = new ModelAndView();
-            mv.addObject("livro", livro);
-            mv.setViewName("livroDetalhe");
+            mv.addObject("livro", livro2);
+            mv.setViewName("livros");
             return mv;
         }
 
         /* Buscar livro por ID */
      @GetMapping("/livros/findById/{id}")
      public ModelAndView getById(@PathVariable("id") Long id) {
-        LivroDTO livro = livroService.getById(id);
+        LivroDTO livro3 = livroService.getById(id);
         ModelAndView mv = new ModelAndView();
-        mv.addObject("livro", livro);
-        mv.setViewName("livroDetalhe");
+        mv.addObject("livro", livro3);
+        mv.setViewName("livros");
         return mv;
         }
 
