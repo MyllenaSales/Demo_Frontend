@@ -38,19 +38,19 @@ public class LivroController {
     }
 
     
-     /* buscar por título */
-@GetMapping("/livros/findByTitulo/{titulo}")
-public ModelAndView getByTitulo(@RequestParam("titulo") String titulo) {
-    LivroDTO livro1 = livroService.getByTitulo(titulo);
-    ModelAndView mv = new ModelAndView();
-    if (livro1 != null) {
-        mv.addObject("listaLivros", List.of(livro1)); 
-    } else {
-        mv.addObject("errorMessage", "Livro não encontrado!");
+    /* buscar por título */
+     @GetMapping("/livros/findByTitulo/{titulo}")
+     public ModelAndView getByTitulo(@RequestParam("titulo") String titulo) {
+        LivroDTO livro1 = livroService.getByTitulo(titulo);
+        ModelAndView mv = new ModelAndView();
+       if (livro1 != null) {
+            mv.addObject("listaLivros", List.of(livro1)); 
+        } else {
+           mv.addObject("errorMessage", "Livro não encontrado!");
+        }
+          mv.setViewName("livros");
+          return mv;
     }
-    mv.setViewName("livros");
-    return mv;
-}
 
        /* buscar por isbn */
        @GetMapping("/livros/findByIsbn/{isbn}")

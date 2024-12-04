@@ -1,4 +1,4 @@
-package br.edu.ifba.demo.frontend.config;
+package br.edu.ifba.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
