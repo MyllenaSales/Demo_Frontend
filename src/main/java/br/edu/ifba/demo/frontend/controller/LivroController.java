@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import br.edu.ifba.demo.frontend.service.LivroService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-/*import org.springframework.web.bind.annotation.PathVariable; */
+import org.springframework.web.bind.annotation.PathVariable; 
 import org.springframework.web.bind.annotation.PostMapping;
+/*import org.springframework.web.bind.annotation.RequestMapping; */
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import br.edu.ifba.demo.frontend.dto.LivroDTO;
@@ -73,7 +74,7 @@ public class LivroController {
             LivroDTO livro = livroService.getById(id);
             ModelAndView mv = new ModelAndView();
             if (livro != null) {
-                mv.addObject("listaLivros", List.of(livro)); // Atualiza a lista para exibir o resultado
+                mv.addObject("listaLivros", List.of(livro)); 
             } else {
                 mv.addObject("errorMessage", "Livro não encontrado!");
             }
@@ -83,10 +84,13 @@ public class LivroController {
         
         
         /* excluir livro */
-     @GetMapping("/livros/delete/{id}")
-     public String delete(@RequestParam("id") Long id) {
-        livroService.delete(id);
-        return "redirect:/livros/listAll";
-        }
+        @GetMapping("/livros/delete/{id}")
+        public ModelAndView delete(@PathVariable Long id) {
+        livroService.delete(id); // Chama o serviço para excluir o livro
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("delete", "Livro excluído com sucesso!");
+        mv.setViewName("livros"); // Redireciona para a página de livros
+        return mv;
+    }
 }
 

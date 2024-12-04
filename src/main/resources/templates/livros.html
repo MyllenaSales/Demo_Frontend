@@ -82,11 +82,15 @@
                     <td th:text="${livro.isbn}"></td>
                     <td th:text="${livro.num_paginas}"></td>
                     <td>
+                        <!-- Botão de excluir -->
                         <a th:href="@{/livros/delete/{id}(id=${livro.id_livro})}" class="btn btn-danger btn-sm">Deletar</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div th:if="${delete}" class="alert alert-success" role="alert">
+            <p th:text="${delete}"></p>
+        </div>
     </div>
 </body>
 </html>
