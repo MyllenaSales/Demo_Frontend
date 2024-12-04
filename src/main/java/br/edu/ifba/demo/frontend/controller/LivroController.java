@@ -7,10 +7,9 @@ import org.springframework.stereotype.Controller;
 import br.edu.ifba.demo.frontend.service.LivroService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+/*import org.springframework.web.bind.annotation.PathVariable; */
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-/*import org.springframework.web.bind.annotation.RequestParam; */
 import org.springframework.web.servlet.ModelAndView;
 import br.edu.ifba.demo.frontend.dto.LivroDTO;
 
@@ -20,15 +19,15 @@ public class LivroController {
        @Autowired
     private LivroService livroService;
 
-       
-    /* Método para salvar livro */
+    
+    /* salvar livro */
     @PostMapping("/livros/save")
     public String save(@ModelAttribute LivroDTO livroDTO) {
-        livroService.save(livroDTO); // Envia os dados para o serviço
-        return "redirect:/livros/listAll"; // Redireciona para a listagem após salvar
+        livroService.save(livroDTO); 
+        return "redirect:/livros/listAll"; 
     }
 
-    /* Listar livros */
+    /* listar livros */
      @GetMapping("/livros/listAll")
      public ModelAndView livros() {
         List<LivroDTO> li = livroService.listAll();
@@ -37,14 +36,15 @@ public class LivroController {
         mv.setViewName("livros");
         return mv;
     }
+
     
-   /* Buscar por título */
+     /* buscar por título */
 @GetMapping("/livros/findByTitulo/{titulo}")
-public ModelAndView getByTitulo(@PathVariable("titulo") String titulo) {
+public ModelAndView getByTitulo(@RequestParam("titulo") String titulo) {
     LivroDTO livro1 = livroService.getByTitulo(titulo);
     ModelAndView mv = new ModelAndView();
     if (livro1 != null) {
-        mv.addObject("listaLivros", List.of(livro1)); // Atualiza a lista para exibir o resultado
+        mv.addObject("listaLivros", List.of(livro1)); 
     } else {
         mv.addObject("errorMessage", "Livro não encontrado!");
     }
@@ -52,17 +52,22 @@ public ModelAndView getByTitulo(@PathVariable("titulo") String titulo) {
     return mv;
 }
 
-        /* buscar por isbn */
-     @GetMapping("/livros/findByIsbn/{isbn}")
-     public ModelAndView getByIsbn(@RequestParam("isbn") String isbn) {
-            LivroDTO livro2 = livroService.getByIsbn(isbn);
-            ModelAndView mv = new ModelAndView();
-            mv.addObject("livro.isbn", livro2);
-            mv.setViewName("livros");
-            return mv;
-        }
+       /* buscar por isbn */
+       @GetMapping("/livros/findByIsbn/{isbn}")
+       public ModelAndView getByIsbn(@RequestParam("isbn") String isbn) {
+           LivroDTO livro2 = livroService.getByIsbn(isbn);
+           ModelAndView mv = new ModelAndView();
+           if (livro2 != null) {
+               mv.addObject("listaLivros", List.of(livro2));
+           } else {
+               mv.addObject("errorMessage", "Livro não encontrado!");
+           }
+           mv.setViewName("livros");
+           return mv;
+       }
+       
 
-        /* Buscar livro por ID */
+        /* buscar por ID */
         @GetMapping("/livros/findById/{id}")
         public ModelAndView getById(@RequestParam("id") Long id) {
             LivroDTO livro = livroService.getById(id);
@@ -77,7 +82,7 @@ public ModelAndView getByTitulo(@PathVariable("titulo") String titulo) {
         }
         
         
-        /* Excluir livro */
+        /* excluir livro */
      @GetMapping("/livros/delete/{id}")
      public String delete(@RequestParam("id") Long id) {
         livroService.delete(id);
