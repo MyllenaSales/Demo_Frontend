@@ -86,10 +86,10 @@ public class LivroController {
         /* excluir livro */
         @GetMapping("/livros/delete/{id}")
         public ModelAndView delete(@PathVariable Long id) {
-        livroService.delete(id); // Chama o serviço para excluir o livro
+        livroService.delete(id); 
         ModelAndView mv = new ModelAndView();
         mv.addObject("delete", "Livro excluído com sucesso!");
-        mv.setViewName("livros"); // Redireciona para a página de livros
+        mv.setViewName("livros"); 
         return mv;
     }
 }
