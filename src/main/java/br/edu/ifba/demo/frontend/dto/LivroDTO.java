@@ -11,10 +11,10 @@ public class LivroDTO {
     private String editora;
     private Integer ano_publicacao;
     private String genero;
-    private String isbn;  // Alterado para String
+    private String isbn;  
     private Integer num_paginas;
 
-    // Getter e Setter para id_livro
+
     public Long getId_livro() {
         return id_livro;
     }
@@ -23,7 +23,7 @@ public class LivroDTO {
         this.id_livro = id_livro;
     }
 
-    // Getter e Setter para titulo
+  
     public String getTitulo() {
         return titulo;
     }
@@ -32,7 +32,6 @@ public class LivroDTO {
         this.titulo = titulo;
     }
 
-    // Getter e Setter para autor
     public String getAutor() {
         return autor;
     }
@@ -41,7 +40,6 @@ public class LivroDTO {
         this.autor = autor;
     }
 
-    // Getter e Setter para editora
     public String getEditora() {
         return editora;
     }
@@ -50,7 +48,6 @@ public class LivroDTO {
         this.editora = editora;
     }
 
-    // Getter e Setter para ano_publicacao
     public Integer getAno_publicacao() {
         return ano_publicacao;
     }
@@ -59,7 +56,7 @@ public class LivroDTO {
         this.ano_publicacao = ano_publicacao;
     }
 
-    // Getter e Setter para genero
+   
     public String getGenero() {
         return genero;
     }
@@ -68,7 +65,6 @@ public class LivroDTO {
         this.genero = genero;
     }
 
-    // Getter e Setter para isbn
     public String getIsbn() {
         return isbn;
     }
@@ -77,7 +73,6 @@ public class LivroDTO {
         this.isbn = isbn;
     }
 
-    // Getter e Setter para num_paginas
     public Integer getNum_paginas() {
         return num_paginas;
     }
