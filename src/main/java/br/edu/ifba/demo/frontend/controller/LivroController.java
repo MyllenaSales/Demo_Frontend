@@ -37,6 +37,14 @@ public class LivroController {
         return "redirect:/livros/listAll"; // Redirects to the catalog page
     }
 
+    // Show book details
+@GetMapping("/view/{id}")
+public String view(@PathVariable Long id, Model model) {
+    LivroDTO livroDTO = livroService.getById(id);
+    model.addAttribute("livroDTO", livroDTO);
+    return "view"; // Returns the view.html template
+}
+
     // Show edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
