@@ -8,55 +8,28 @@
     <div class="container">
         <h1 class="my-4">Gerenciamento de Livros</h1>
 
-        <!-- Formulário para Adicionar -->
-        <form th:action="@{/livros/save}" method="post" class="mb-4">
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <input type="text" class="form-control" name="titulo" placeholder="Título" required>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" name="autor" placeholder="Autor" required>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" name="isbn" placeholder="ISBN" required>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" name="editora" placeholder="Editora">
-                </div>
-                <div class="col-md-4">
-                    <input type="number" class="form-control" name="ano_publicacao" placeholder="Ano">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" name="genero" placeholder="Gênero">
-                </div>
-                <div class="col-md-4">
-                    <input type="number" class="form-control" name="num_paginas" placeholder="Número de Páginas">
-                </div>
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Adicionar Livro</button>
-                </div>
-            </div>
-        </form>
+        <!-- Link to Register Page -->
+        <a th:href="@{/livros/register}" class="btn btn-primary mb-4">Adicionar Novo Livro</a>
 
-        <!-- Formulários de Busca -->
+        <!-- Search Forms -->
         <h3>Buscar Livros</h3>
-        <!-- buscar por id -->
-        <form th:action="@{/livros/findById/{id}}" method="get" class="mb-3 d-inline-block">
+        <!-- Search by ID -->
+        <form th:action="@{/livros/findById}" method="get" class="mb-3 d-inline-block">
             <input type="number" name="id" class="form-control d-inline-block w-25" placeholder="ID">
             <button type="submit" class="btn btn-secondary">Buscar por ID</button>
         </form>
-        <!-- buscar por título -->
-        <form th:action="@{/livros/findByTitulo/{titulo}}" method="get" class="mb-3 d-inline-block">
+        <!-- Search by Title -->
+        <form th:action="@{/livros/findByTitulo}" method="get" class="mb-3 d-inline-block">
             <input type="text" name="titulo" class="form-control d-inline-block w-25" placeholder="Título" required>
             <button type="submit" class="btn btn-secondary">Buscar por Título</button>
         </form>
-        <!-- buscar por isbn -->
-        <form th:action="@{/livros/findByIsbn/{isbn}}" method="get" class="mb-3 d-inline-block">
+        <!-- Search by ISBN -->
+        <form th:action="@{/livros/findByIsbn}" method="get" class="mb-3 d-inline-block">
             <input type="text" name="isbn" class="form-control d-inline-block w-25" placeholder="ISBN" required>
             <button type="submit" class="btn btn-secondary">Buscar por ISBN</button>
         </form>
 
-        <!-- Lista de Livros -->
+        <!-- Book List -->
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -82,15 +55,14 @@
                     <td th:text="${livro.isbn}"></td>
                     <td th:text="${livro.num_paginas}"></td>
                     <td>
-                        <!-- Botão de excluir -->
+                        <!-- Edit Button -->
+                        <a th:href="@{/livros/edit/{id}(id=${livro.id_livro})}" class="btn btn-warning btn-sm">Editar</a>
+                        <!-- Delete Button -->
                         <a th:href="@{/livros/delete/{id}(id=${livro.id_livro})}" class="btn btn-danger btn-sm">Deletar</a>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div th:if="${delete}" class="alert alert-success" role="alert">
-            <p th:text="${delete}"></p>
-        </div>
     </div>
 </body>
 </html>

@@ -11,9 +11,11 @@ public class LivroDTO {
     private String editora;
     private Integer ano_publicacao;
     private String genero;
-    private String isbn;  
+    private String isbn;
     private Integer num_paginas;
-
+    private String sinopse;
+    private String idioma;
+    private Double preco;
 
     public Long getId_livro() {
         return id_livro;
@@ -23,7 +25,6 @@ public class LivroDTO {
         this.id_livro = id_livro;
     }
 
-  
     public String getTitulo() {
         return titulo;
     }
@@ -56,7 +57,6 @@ public class LivroDTO {
         this.ano_publicacao = ano_publicacao;
     }
 
-   
     public String getGenero() {
         return genero;
     }
@@ -79,5 +79,29 @@ public class LivroDTO {
 
     public void setNum_paginas(Integer num_paginas) {
         this.num_paginas = num_paginas;
+    }
+
+    public String getSinopse() {
+        return sinopse;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 }
