@@ -1,16 +1,21 @@
 package br.edu.ifba.demo.frontend.controller;
 
-import java.util.List;
+import br.edu.ifba.demo.frontend.dto.LivroDTO;
+import br.edu.ifba.demo.frontend.service.GeneroService;
+import br.edu.ifba.demo.frontend.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import br.edu.ifba.demo.frontend.dto.LivroDTO;
-import br.edu.ifba.demo.frontend.service.LivroService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/livros")
 public class LivroController {
+
+    @Autowired
+    private GeneroService generoService; // Add this line
 
     @Autowired
     private LivroService livroService;
@@ -23,13 +28,22 @@ public class LivroController {
         return "catalog"; // Returns the catalog.html template
     }
 
-    // Show registration form
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("livroDTO", new LivroDTO());
-        return "register"; // Returns the register.html template
+        model.addAttribute("listaGeneros", generoService.listAll()); // Add this line
+        return "register";
     }
 
+    // Show edit form
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        LivroDTO livroDTO = livroService.getById(id);
+        model.addAttribute("livroDTO", livroDTO);
+        model.addAttribute("listaGeneros", generoService.listAll()); // Add this line
+        return "edit";
+    }
+  
     // Save a new book
     @PostMapping("/save")
     public String save(@ModelAttribute LivroDTO livroDTO) {
@@ -38,19 +52,11 @@ public class LivroController {
     }
 
     // Show book details
-@GetMapping("/view/{id}")
-public String view(@PathVariable Long id, Model model) {
-    LivroDTO livroDTO = livroService.getById(id);
-    model.addAttribute("livroDTO", livroDTO);
-    return "view"; // Returns the view.html template
-}
-
-    // Show edit form
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable Long id, Model model) {
         LivroDTO livroDTO = livroService.getById(id);
         model.addAttribute("livroDTO", livroDTO);
-        return "edit"; // Returns the edit.html template
+        return "view"; // Returns the view.html template
     }
 
     // Update an existing book

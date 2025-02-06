@@ -1,15 +1,14 @@
 package br.edu.ifba.demo.frontend.service;
 
-import java.util.List;
+import br.edu.ifba.demo.frontend.dto.LivroDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import br.edu.ifba.demo.frontend.dto.LivroDTO;
+import java.util.List;
 
 @Service
 public class LivroService {
 
     private final String BASE_URL = "http://localhost:8081/livros"; // Backend URL
-
     private final RestTemplate restTemplate = new RestTemplate();
 
     // List all books

@@ -51,12 +51,12 @@
                     <td th:text="${livro.autor}"></td>
                     <td th:text="${livro.editora}"></td>
                     <td th:text="${livro.ano_publicacao}"></td>
-                    <td th:text="${livro.genero}"></td>
+                    <td th:text="${livro.genero.nome_genero}"></td>
                     <td th:text="${livro.isbn}"></td>
                     <td th:text="${livro.num_paginas}"></td>
                     <td>
-                           <!-- View Button -->
-                           <a th:href="@{/livros/view/{id}(id=${livro.id_livro})}" class="btn btn-info btn-sm">Visualizar</a>
+                        <!-- View Button -->
+                        <a th:href="@{/livros/view/{id}(id=${livro.id_livro})}" class="btn btn-info btn-sm">Visualizar</a>
                         <!-- Edit Button -->
                         <a th:href="@{/livros/edit/{id}(id=${livro.id_livro})}" class="btn btn-warning btn-sm">Editar</a>
                         <!-- Delete Button -->
