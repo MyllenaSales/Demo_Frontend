@@ -55,12 +55,15 @@
                     <td th:text="${livro.isbn}"></td>
                     <td th:text="${livro.num_paginas}"></td>
                     <td>
-                        <!-- View Button -->
-                        <a th:href="@{/livros/view/{id}(id=${livro.id_livro})}" class="btn btn-info btn-sm">Visualizar</a>
-                        <!-- Edit Button -->
-                        <a th:href="@{/livros/edit/{id}(id=${livro.id_livro})}" class="btn btn-warning btn-sm">Editar</a>
-                        <!-- Delete Button -->
-                        <a th:href="@{/livros/delete/{id}(id=${livro.id_livro})}" class="btn btn-danger btn-sm">Deletar</a>
+                        <!-- Flex container for buttons -->
+                        <div class="d-flex">
+                            <!-- View Button -->
+                            <a th:href="@{/livros/view/{id}(id=${livro.id_livro})}" class="btn btn-info btn-sm me-2">Visualizar</a>
+                            <!-- Edit Button -->
+                            <a th:href="@{/livros/edit/{id}(id=${livro.id_livro})}" class="btn btn-warning btn-sm me-2">Editar</a>
+                            <!-- Delete Button -->
+                            <a th:href="@{/livros/delete/{id}(id=${livro.id_livro})}" class="btn btn-danger btn-sm">Deletar</a>
+                        </div>
                     </td>
                 </tr>
             </tbody>

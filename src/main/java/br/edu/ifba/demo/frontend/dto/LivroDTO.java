@@ -1,6 +1,5 @@
 package br.edu.ifba.demo.frontend.dto;
 
-import br.edu.ifba.demo.frontend.dto.GeneroDTO;
 
 public class LivroDTO {
     private Long id_livro;
