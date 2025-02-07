@@ -11,7 +11,7 @@ public class GeneroService {
     private final String BASE_URL = "http://localhost:8081/generos"; // Backend URL
     private final RestTemplate restTemplate = new RestTemplate();
 
-    // List all genres
+  
     public List<GeneroDTO> listAll() {
         return List.of(restTemplate.getForObject(BASE_URL + "/listAll", GeneroDTO[].class));
     }

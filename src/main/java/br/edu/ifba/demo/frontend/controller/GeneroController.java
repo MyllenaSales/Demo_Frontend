@@ -16,12 +16,11 @@ public class GeneroController {
     @Autowired
     private GeneroService generoService;
 
-    // List all genres
     @GetMapping("/listAll")
     public String listAll(Model model) {
         List<GeneroDTO> listaGeneros = generoService.listAll();
         model.addAttribute("listaGeneros", listaGeneros);
-        return "generos"; // Returns the generos.html template
+        return "generos"; 
     }
 
 
